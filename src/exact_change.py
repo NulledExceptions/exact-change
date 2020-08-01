@@ -2,11 +2,10 @@ from itertools import product
 from math import ceil 
 
 
-class MarketCombos(object):
+class ExactChange(object):
 
     def find_combinations(self,total,price_list):
         matches = []
-
 
         # Max combinations should be equal to the total amount divided
         # by the lowest cost item and then rounded up to integer.
@@ -74,8 +73,8 @@ def main():
                 item_dict[price] = name
 
     price_list = item_dict.keys()
-    ob = MarketCombos()
-    matches = ob.find_combinations(total,price_list)
+    ec = ExactChange()
+    matches = ec.find_combinations(total,price_list)
     
 
 
