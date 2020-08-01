@@ -6,6 +6,8 @@ class ExactChange(object):
 
     def find_combinations(self,total,price_list):
         matches = []
+        if not price_list:
+            return matches
 
         # Max combinations should be equal to the total amount divided
         # by the lowest cost item and then rounded up to integer.
