@@ -1,18 +1,18 @@
 from itertools import product
-from math import ceil 
+from math import floor 
 
 
 class ExactChange(object):
 
     def find_combinations(self,total,price_list):
         matches = []
-        if not price_list:
+        if not (price_list or total):
             return matches
 
         # Max combinations should be equal to the total amount divided
-        # by the lowest cost item and then rounded up to integer.
+        # by the lowest cost item and then rounded down to integer.
         ## Multiply by 100 to avoid dividing by a fraction
-        max_combinations = ceil(total * 100 / (min(price_list) * 100))
+        max_combinations = floor(total * 100 / (min(price_list) * 100))
 
         # Iterate number of item combinations
         for num_items in range(1, max_combinations + 1):
@@ -39,18 +39,19 @@ def main():
     import csv
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-f", dest="filepath", required=True,  help="must include --file /path/to/file.csv")
+    parser.add_argument("-f", dest="filepath", required=True,  help="must include -f /path/to/file.csv")
     args = parser.parse_args()
     
     try:
         csvfile = open(args.filepath,'r')
     except Exception as e:
         print('Error opening file: {}'.format(e) )
-        sys.exit(0)
+        sys.exit(2)
 
     csv_in = csv.DictReader(csvfile,fieldnames=["name","price"],delimiter=',')
 
     item_dict = {}
+    total = 0
 
     # Iterate csv
     for index,row in enumerate(csv_in):
